@@ -1,7 +1,7 @@
 FROM node:18
 
-# Install system dependencies (curl for health check, and openssl for Prisma compatibility)
-RUN apt-get update && apt-get install -y curl openssl && rm -rf /var/lib/apt/lists/*
+# Install system dependencies (curl for health check, openssl for Prisma, and sqlite3 for DB seeding)
+RUN apt-get update && apt-get install -y curl openssl sqlite3 && rm -rf /var/lib/apt/lists/*
 
 # Install omniroute globally
 RUN npm install -g omniroute --unsafe-perm

@@ -17,11 +17,20 @@ OMNI_EOF
 
 echo "[SYSTEM] Standalone OmniRoute config written to $OMNI_ENV"
 
-# Clean stale SQLite database on start to ensure encryption syncs
-if [ -f "$OMNI_DB" ]; then
-    echo "[SYSTEM] Cleaning old database..."
-    rm -f "$OMNI_DB"
-fi
-
 echo "[SYSTEM] Launching OmniRoute serve on port $PORT..."
-exec omniroute serve --port $PORT --no-open
+omniroute serve --port $PORT --no-open &
+SERVER_PID=$!
+
+echo "[SYSTEM] Waiting for database to initialize..."
+for i in $(seq 1 40); do
+    if [ -f "$OMNI_DB" ] && sqlite3 "$OMNI_DB" ".tables" | grep -q "api_keys"; then
+        echo "[SYSTEM] Database initialized! Seeding API Key..."
+        sqlite3 "$OMNI_DB" "INSERT OR IGNORE INTO api_keys (id, name, key, key_prefix, created_at, no_log) VALUES ('default-anaya-key', 'Anaya Bot Key', 'sk-or-omniroute', 'sk-or-', datetime('now'), 0);"
+        echo "[SYSTEM] API Key 'sk-or-omniroute' seeded successfully!"
+        break
+    fi
+    sleep 0.5
+done
+
+# Bring server process to foreground
+wait $SERVER_PID
