@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:22
 
 # Install system dependencies (curl for health check, openssl for Prisma, and sqlite3 for DB seeding)
 RUN apt-get update && apt-get install -y curl openssl sqlite3 && rm -rf /var/lib/apt/lists/*
