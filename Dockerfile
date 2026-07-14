@@ -1,7 +1,7 @@
-FROM node:18-slim
+FROM node:18
 
-# Install system dependencies (curl for health check, and python3/make/g++ for compiling better-sqlite3 if needed)
-RUN apt-get update && apt-get install -y curl python3 make g++ && rm -rf /var/lib/apt/lists/*
+# Install system dependencies (curl for health check, and openssl for Prisma compatibility)
+RUN apt-get update && apt-get install -y curl openssl && rm -rf /var/lib/apt/lists/*
 
 # Install omniroute globally
 RUN npm install -g omniroute --unsafe-perm
