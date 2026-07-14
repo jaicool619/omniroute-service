@@ -16,8 +16,4 @@ WORKDIR /app
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
-# Render binds to $PORT dynamically
-ENV PORT=20128
-EXPOSE 20128
-
 ENTRYPOINT ["./entrypoint.sh"]

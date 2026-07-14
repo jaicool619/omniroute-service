@@ -18,8 +18,8 @@ OMNI_EOF
 
 echo "[SYSTEM] Standalone OmniRoute config written to $OMNI_ENV"
 
-echo "[SYSTEM] Launching OmniRoute serve on port $PORT..."
-omniroute serve --port $PORT --no-open &
+echo "[SYSTEM] Launching OmniRoute serve on port ${PORT:-20128}..."
+omniroute serve --port ${PORT:-20128} --no-open &
 SERVER_PID=$!
 
 echo "[SYSTEM] Waiting for database to initialize..."
