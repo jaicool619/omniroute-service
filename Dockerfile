@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y curl openssl sqlite3 && rm -rf /var/lib
 
 # Optimize V8 garbage collection to fit in Render's 512MB RAM limit
 ENV NODE_OPTIONS="--max-old-space-size=350"
+ENV HOSTNAME=0.0.0.0
 
 # Install omniroute globally
 RUN npm install -g omniroute --unsafe-perm
