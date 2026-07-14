@@ -16,4 +16,6 @@ WORKDIR /app
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
+EXPOSE 10000
+
 ENTRYPOINT ["./entrypoint.sh"]
